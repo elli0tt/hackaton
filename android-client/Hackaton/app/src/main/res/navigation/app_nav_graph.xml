@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/app_nav_graph"
+    app:startDestination="@id/patientDataListFragment">
+
+    <fragment
+        android:id="@+id/patientDataListFragment"
+        android:name="com.example.hackatonapp.presentation.screen.patient.data_list.PatientDataListFragment"
+        android:label="PatientDataListFragment" />
+</navigation>
