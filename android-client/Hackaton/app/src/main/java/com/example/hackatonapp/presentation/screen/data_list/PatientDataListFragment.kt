@@ -1,4 +1,4 @@
-package com.example.hackatonapp.presentation.screen.patient.data_list
+package com.example.hackatonapp.presentation.screen.data_list
 
 import android.os.Bundle
 import android.view.View

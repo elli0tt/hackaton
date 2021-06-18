@@ -1,4 +1,4 @@
-package com.example.hackatonapp.presentation.screen.patient.data_list
+package com.example.hackatonapp.presentation.screen.data_list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

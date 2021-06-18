@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/patientDataListFragment"
-        android:name="com.example.hackatonapp.presentation.screen.patient.data_list.PatientDataListFragment"
+        android:name="com.example.hackatonapp.presentation.screen.data_list.PatientDataListFragment"
         android:label="PatientDataListFragment" >
     </fragment>
 </navigation>
