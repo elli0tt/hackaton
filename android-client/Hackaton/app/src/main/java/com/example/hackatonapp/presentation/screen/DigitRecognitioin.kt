@@ -16,20 +16,27 @@ import com.google.mlkit.vision.text.TextRecognizerOptions
 import com.google.android.gms.tasks.Task
 
 import androidx.annotation.NonNull
+import java.io.PrintWriter
 
 
-class DigitRecognitioin : ImageAnalysis.Analyzer, AppCompatActivity() {
+class DigitRecognitioin : ImageAnalysis.Analyzer, Fragment(R.layout.fragment_add_note) {
+    var image: InputImage? = null
+    var res:Task<Text>? = null
 
-    @SuppressLint("UnsafeExperimentalUsageError")
+    @SuppressLint("UnsafeExperimentalUsageError", "UnsafeOptInUsageError")
     override fun analyze(imageProxy: ImageProxy) {
         val mediaImage = imageProxy.image
         if (mediaImage != null) {
             val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
         }
+
+        imageProxy.close()
     }
 
-    private fun processTextBlock(result: Text) {
+    public fun processTextBlock(result:Text){
         // [START mlkit_process_text_block]
+        var nums = arrayOf("", "", "")
+        var i = 0
         val resultText = result.text
         for (block in result.textBlocks) {
             val blockText = block.text
@@ -41,17 +48,17 @@ class DigitRecognitioin : ImageAnalysis.Analyzer, AppCompatActivity() {
                 val lineFrame = line.boundingBox
                 for (element in line.elements) {
                     val elementText = element.text
-                    print(elementText)
+                    nums[i]+=elementText
                     val elementCornerPoints = element.cornerPoints
                     val elementFrame = element.boundingBox
                 }
-                println()
+               i+=1
             }
         }
         // [END mlkit_process_text_block]
     }
 
-    private fun recognizeText(image: InputImage) {
+    public fun recognizeText(image: InputImage) {
 
         // [START get_detector_default]
         val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
@@ -60,11 +67,10 @@ class DigitRecognitioin : ImageAnalysis.Analyzer, AppCompatActivity() {
         // [START run_detector]
         val result = recognizer.process(image)
             .addOnSuccessListener {
-                print("Detection successful")
-
+                Log.d("10","Detection successful")
             }
             .addOnFailureListener { e ->
-                println("An error has occurred")
+                Log.d("10","An error has occurred")
             }
             .addOnCompleteListener { task_ ->
                 if (task_.isSuccessful) {
@@ -73,12 +79,8 @@ class DigitRecognitioin : ImageAnalysis.Analyzer, AppCompatActivity() {
                     print("Text Detection Failed")
                 }
             }
+        res = result
         // [END run_detector]
     }
 
-    private fun getTextRecognizer(): TextRecognizer {
-        // [START mlkit_local_doc_recognizer]
-        return TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
-        // [END mlkit_local_doc_recognizer]
-    }
 }

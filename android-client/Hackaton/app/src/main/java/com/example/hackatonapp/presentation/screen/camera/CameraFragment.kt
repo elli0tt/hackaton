@@ -20,6 +20,8 @@ import androidx.fragment.app.Fragment
 import com.example.hackatonapp.R
 import com.example.hackatonapp.databinding.FragmentCameraBinding
 import com.example.hackatonapp.presentation.extensions.viewBinding
+import com.example.hackatonapp.presentation.screen.DigitRecognitioin
+import com.google.mlkit.vision.text.Text
 import java.io.File
 import java.io.FileOutputStream
 import java.nio.ByteBuffer
@@ -95,20 +97,32 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
             }
             @SuppressLint("UnsafeOptInUsageError")
             override fun onCaptureSuccess(imageP: ImageProxy) {
+                //try {
+                val rotation = imageP.imageInfo.rotationDegrees
+                val RecognitionObject = DigitRecognitioin()
                 try {
-                    val rotation = imageP.imageInfo.rotationDegrees
-                    img = imageProxyToBitmap(imageP)
-                    img = rotateImage(img, rotation.toFloat())
-                    if (img != null) {
-                        var fos = FileOutputStream(photoFile)
-                        img?.compress(Bitmap.CompressFormat.JPEG, 25, fos)
-                        fos.flush()
-                        fos.close()
+                    RecognitionObject.analyze(imageP)
+                    if(RecognitionObject.image!=null) {
+                        RecognitionObject.recognizeText(RecognitionObject.image!!)
+                        if(RecognitionObject.res!=null) {
+                            RecognitionObject.processTextBlock(RecognitionObject.res as Text)
+                        }
                     }
-                } catch (e: java.lang.Exception) {
-                    Log.e("MyLog", e.toString());
+
+                } catch (e: Exception) {
                 }
 
+                    //img = imageProxyToBitmap(imageP)
+                    //img = rotateImage(img, rotation.toFloat())
+                    //if (img != null) {
+                     //   var fos = FileOutputStream(photoFile)
+                     //   img?.compress(Bitmap.CompressFormat.JPEG, 25, fos)
+                     //   fos.flush()
+                     //   fos.close()
+               //     }
+                //} catch (e: java.lang.Exception) {
+                 //   Log.e("MyLog", e.toString());
+                //}
             }
         })
     }
@@ -136,7 +150,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
 
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this.requireContext())
-        cameraProviderFuture.addListener({
+        cameraProviderFuture.addListener(Runnable{
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
             val preview = Preview.Builder()
