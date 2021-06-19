@@ -25,4 +25,9 @@
     <string name="still_no_account">Еще нет аккаунта? :(</string>
     <string name="snils">Снилс</string>
     <string name="sign_up">Зарегистрироваться</string>
+    <string name="notes">Дневник</string>
+    <string name="talking_with_doctor">Общение с врачом</string>
+    <string name="settings">Настройки</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -61,4 +61,12 @@
             android:id="@+id/action_registrationFragment_to_patientDataListFragment"
             app:destination="@id/patientDataListFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.hackatonapp.presentation.screen.settings.SettingsFragment"
+        android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/doctorMessageFragment"
+        android:name="com.example.hackatonapp.presentation.screen.doctor_message.DoctorMessageFragment"
+        android:label="DoctorMessageFragment" />
 </navigation>
