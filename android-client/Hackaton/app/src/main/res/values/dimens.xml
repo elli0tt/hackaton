@@ -2,4 +2,6 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="add_note_margin_top">16dp</dimen>
+    <dimen name="standard_big_text_size">24sp</dimen>
+    <dimen name="no_registration_text_size">20sp</dimen>
 </resources>
