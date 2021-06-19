@@ -49,13 +49,13 @@ class SignInFragment : Fragment(R.layout.fragment_init) {
                         .show()
                 }
             }else {
-            Toast.makeText(
-                context,
-                "Все поля должны быть заполнены",
-                Toast.LENGTH_SHORT
-            )
-                .show()
-        }
+                Toast.makeText(
+                    context,
+                    "Все поля должны быть заполнены",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
         }
         binding.tvSendToRegistrationTitle.setOnClickListener {
             findNavController()
