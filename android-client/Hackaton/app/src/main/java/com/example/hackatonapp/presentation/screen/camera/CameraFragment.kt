@@ -1,7 +1,6 @@
 package com.example.hackatonapp.presentation.screen.camera
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -76,7 +75,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
         }
         return null
     }
-    
+
     private fun takePhoto() {
         val imageCapture = imageCapture ?: return
 
