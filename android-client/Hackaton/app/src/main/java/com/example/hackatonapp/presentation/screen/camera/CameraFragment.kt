@@ -30,6 +30,7 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 
+
 class CameraFragment : Fragment(R.layout.fragment_camera) {
 
     private val binding by viewBinding(FragmentCameraBinding::bind)
@@ -135,7 +136,6 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         if (!allPermissionsGranted()) {
             ActivityCompat.requestPermissions(
                 this.requireActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)

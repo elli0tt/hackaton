@@ -29,14 +29,13 @@ class DigitRecognitioin : ImageAnalysis.Analyzer, Fragment(R.layout.fragment_add
         if (mediaImage != null) {
             val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
         }
-
         imageProxy.close()
     }
 
-    public fun processTextBlock(result:Text){
+    fun processTextBlock(result: Text) {
         // [START mlkit_process_text_block]
-        var nums = arrayOf("", "", "")
-        var i = 0
+        var nums =arrayOf("","","")
+        var i=0
         val resultText = result.text
         for (block in result.textBlocks) {
             val blockText = block.text
@@ -55,8 +54,8 @@ class DigitRecognitioin : ImageAnalysis.Analyzer, Fragment(R.layout.fragment_add
                i+=1
             }
         }
-        // [END mlkit_process_text_block]
     }
+  // [END mlkit_process_text_block]
 
     public fun recognizeText(image: InputImage) {
 
@@ -71,6 +70,7 @@ class DigitRecognitioin : ImageAnalysis.Analyzer, Fragment(R.layout.fragment_add
             }
             .addOnFailureListener { e ->
                 Log.d("10","An error has occurred")
+
             }
             .addOnCompleteListener { task_ ->
                 if (task_.isSuccessful) {
@@ -82,5 +82,4 @@ class DigitRecognitioin : ImageAnalysis.Analyzer, Fragment(R.layout.fragment_add
         res = result
         // [END run_detector]
     }
-
 }
