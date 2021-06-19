@@ -4,34 +4,32 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.example.hackatonapp.data.entities.PatientNoteEntity
+import com.example.hackatonapp.data.database.entities.PatientNoteEntity
 import com.example.hackatonapp.databinding.ListItemPatientDataBinding
+import com.example.hackatonapp.domain.model.PatientNote
 
 class PatientDataListAdapter :
-    ListAdapter<PatientNoteEntity, PatientDataListViewHolder>(DIFF_CALLBACK) {
+    ListAdapter<PatientNote, PatientDataListViewHolder>(DIFF_CALLBACK) {
 
     fun interface OnItemClickListener {
         fun onItemClick(position: Int)
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<PatientNoteEntity>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<PatientNote>() {
             override fun areItemsTheSame(
-                oldItem: PatientNoteEntity,
-                newItem: PatientNoteEntity
+                oldItem: PatientNote,
+                newItem: PatientNote
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: PatientNoteEntity,
-                newItem: PatientNoteEntity
+                oldItem: PatientNote,
+                newItem: PatientNote
             ): Boolean {
-                return oldItem.pressure == newItem.pressure &&
-                        oldItem.pulse == newItem.pulse &&
-                        oldItem.dateTimeCreated == newItem.dateTimeCreated
+                return oldItem == newItem
             }
-
         }
     }
 
