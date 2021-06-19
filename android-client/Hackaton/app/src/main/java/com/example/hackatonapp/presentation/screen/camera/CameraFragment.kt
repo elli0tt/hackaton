@@ -76,8 +76,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
         }
         return null
     }
-
-//    @RequiresApi(Build.VERSION_CODES.N)
+    
     private fun takePhoto() {
         val imageCapture = imageCapture ?: return
 
