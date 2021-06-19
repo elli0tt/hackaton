@@ -2,18 +2,16 @@ package com.example.hackatonapp.presentation.screen.data_list
 
 import android.app.Application
 import android.widget.Filter
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.*
 import com.example.hackatonapp.R
 import com.example.hackatonapp.data.database.entities.PatientNoteEntity
 import com.example.hackatonapp.data.repository.PatientNoteRepositoryImpl
 import com.example.hackatonapp.domain.model.PatientNote
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-
 
 class PatientDataListViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -71,6 +69,26 @@ class PatientDataListViewModel(application: Application) : AndroidViewModel(appl
                 )
             )
         }
+        result.add(
+            PatientNoteEntity(
+                id = 100,
+                sys = 180,
+                dia = 200,
+                pulse = 66,
+                dateTimeCreated = currentDate,
+                patientSNILS = ""
+            )
+        )
+        result.add(
+            PatientNoteEntity(
+                id = 101,
+                sys = 120,
+                dia = 400,
+                pulse = 666,
+                dateTimeCreated = currentDate,
+                patientSNILS = ""
+            )
+        )
 
         return result
     }
@@ -85,8 +103,10 @@ class PatientDataListViewModel(application: Application) : AndroidViewModel(appl
 
     private val filter = object : Filter() {
         override fun performFiltering(query: CharSequence): FilterResults {
-            val result = ArrayList<PatientNote>()
-            if (query.isNotEmpty()) {
+            var result: MutableList<PatientNote> = arrayListOf()
+            if (query.isEmpty()) {
+                result = allNotes.value?.toMutableList() ?: arrayListOf()
+            } else {
                 allNotes.value?.forEach { patientNote ->
                     if (patientNote.pressure.contains(query) ||
                         patientNote.pulse.contains(query) ||

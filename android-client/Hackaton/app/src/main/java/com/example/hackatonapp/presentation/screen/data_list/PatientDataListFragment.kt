@@ -5,6 +5,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -68,21 +70,23 @@ class PatientDataListFragment : Fragment(R.layout.fragment_patient_data_list) {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_patient_data_list, menu)
         super.onCreateOptionsMenu(menu, inflater)
 
-//        val searchMenuItem: MenuItem = menu.findItem(R.id.action_search)
-//        val searchView = searchMenuItem.actionView as SearchView
-//
-//        searchView.queryHint = getString(R.string.patient_note_search)
-//        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//            override fun onQueryTextSubmit(query: String): Boolean {
-//                return false
-//            }
-//
-//            override fun onQueryTextChange(newQuery: String): Boolean {
-//                viewModel.updateSearchQuery(newQuery)
-//                return true
-//            }
-//        })
+        val searchMenuItem: MenuItem = menu.findItem(R.id.action_search)
+
+        val searchView = searchMenuItem.actionView as SearchView
+
+        searchView.queryHint = getString(R.string.patient_note_search)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newQuery: String): Boolean {
+                viewModel.updateSearchQuery(newQuery)
+                return true
+            }
+        })
     }
 }
