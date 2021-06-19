@@ -33,8 +33,8 @@ class SignInFragment : Fragment(R.layout.fragment_init) {
 
     private fun setListeners() {
         binding.button.setOnClickListener {
-            val login = binding.loginSignInTextEdit.text.toString()
-            val password = binding.passwordSignInTextEdit.text.toString()
+            val login = binding.etLogin.text.toString()
+            val password = binding.etPassword.text.toString()
             val user = User(login, password)
             if (password.isNotEmpty() && login.isNotEmpty()) {
                 if (password.length > 6) {
@@ -56,6 +56,8 @@ class SignInFragment : Fragment(R.layout.fragment_init) {
             )
                 .show()
         }
+            binding.progressBar.visibility = View.VISIBLE
+            viewModel.getUserToken(user)
         }
         binding.tvSendToRegistrationTitle.setOnClickListener {
             findNavController()
@@ -69,7 +71,7 @@ class SignInFragment : Fragment(R.layout.fragment_init) {
             Observer { response ->
                 when(response){
                     is Resource.Success -> {
-                        hideProgressBar()
+                        binding.progressBar.visibility = View.INVISIBLE
                         response.data?.let { response ->
                             saveToSharedPreferences(response)
                         }
@@ -77,25 +79,21 @@ class SignInFragment : Fragment(R.layout.fragment_init) {
                             .navigate(R.id.action_initFragment_to_patientDataListFragment)
                     }
                     is Resource.Error -> {
-                        hideProgressBar()
+                        binding.progressBar.visibility = View.INVISIBLE
                         Toast.makeText(context, "Что-то пошло не так", Toast.LENGTH_SHORT).show()
                     }
-                    is Resource.Loading -> {
-                        showProgressBar()
+                    else -> {
+                        Toast.makeText(context, "Что-то пошло не так", Toast.LENGTH_SHORT).show()
                     }
                 }
+
+//                findNavController()
+//                    .navigate(R.id.action_initFragment_to_patientDataListFragment)
+//
+//                saveToSharedPreferences(response)
             }
         )
     }
-
-    private fun hideProgressBar() {
-        binding.progressBar.visibility = View.INVISIBLE
-    }
-
-    private fun showProgressBar() {
-        binding.progressBar.visibility = View.VISIBLE
-    }
-
 
     private fun saveToSharedPreferences(token: String){
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return

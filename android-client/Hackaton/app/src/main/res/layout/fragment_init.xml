@@ -17,63 +17,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/login_sign_in_text_input_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/etLogin"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/login"
+        android:layout_marginTop="148dp"
+        android:ems="10"
+        android:hint="Логин"
         android:textSize="24sp"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="150dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvApplicationName" >
+        app:layout_constraintTop_toBottomOf="@+id/tvApplicationName" />
 
-    <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/login_sign_in_text_edit"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password_sign_in_text_input_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/password"
-        android:textSize="@dimen/standard_big_text_size"
+        android:layout_marginTop="35dp"
+        android:ems="10"
+        android:textSize="24sp"
+        android:inputType="textPassword"
+        android:hint="Пароль"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        app:passwordToggleEnabled="true"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_sign_in_text_input_layout" >
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password_sign_in_text_edit"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-
+        app:layout_constraintTop_toBottomOf="@+id/etLogin" />
 
     <TextView
         android:id="@+id/tvDontHaveAccoutTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:textSize="@dimen/no_registration_text_size"
-        android:text="@string/still_no_account"
+        android:textSize="20sp"
+        android:text="Еще нет аккаунта? :("
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_sign_in_text_input_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
     <TextView
         android:id="@+id/tvSendToRegistrationTitle"
@@ -81,8 +61,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textColor="@color/red"
-        android:textSize="@dimen/no_registration_text_size"
-        android:text="@string/register"
+        android:textSize="20sp"
+        android:text="Зарегистрируйтесь!:)"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDontHaveAccoutTitle" />
@@ -92,8 +72,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:text="@string/sign_in"
-        android:textSize="@dimen/standard_big_text_size"
+        android:text="Войти"
+        android:textSize="24sp"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
