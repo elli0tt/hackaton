@@ -90,27 +90,27 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
 
         imageCapture.takePicture(ContextCompat.getMainExecutor(this.requireContext()), object :
             ImageCapture.OnImageCapturedCallback() {
-                override fun onError(exc: ImageCaptureException) {
-                    Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
-                }
-                @SuppressLint("UnsafeOptInUsageError")
-                override fun onCaptureSuccess(imageP: ImageProxy) {
-                    try {
-                        val rotation = imageP.imageInfo.rotationDegrees
-                        img = imageProxyToBitmap(imageP)
-                        img = rotateImage(img, rotation.toFloat())
-                        if (img != null) {
-                            var fos = FileOutputStream(photoFile)
-                            img?.compress(Bitmap.CompressFormat.JPEG, 25, fos)
-                            fos.flush()
-                            fos.close()
-                        }
-                    } catch (e: java.lang.Exception) {
-                        Log.e("MyLog", e.toString());
+            override fun onError(exc: ImageCaptureException) {
+                Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
+            }
+            @SuppressLint("UnsafeOptInUsageError")
+            override fun onCaptureSuccess(imageP: ImageProxy) {
+                try {
+                    val rotation = imageP.imageInfo.rotationDegrees
+                    img = imageProxyToBitmap(imageP)
+                    img = rotateImage(img, rotation.toFloat())
+                    if (img != null) {
+                        var fos = FileOutputStream(photoFile)
+                        img?.compress(Bitmap.CompressFormat.JPEG, 25, fos)
+                        fos.flush()
+                        fos.close()
                     }
-
+                } catch (e: java.lang.Exception) {
+                    Log.e("MyLog", e.toString());
                 }
-            })
+
+            }
+        })
     }
 
     override fun onDestroy() {
