@@ -100,7 +100,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
                         img = rotateImage(img, rotation.toFloat())
                         if (img != null) {
                             var fos = FileOutputStream(photoFile)
-                            img?.compress(Bitmap.CompressFormat.JPEG, 25, fos)
+                            img?.compress(Bitmap.CompressFormat.JPEG, 50, fos)
                             fos.flush()
                             fos.close()
                         }
