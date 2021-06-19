@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
-import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +22,7 @@ import com.example.hackatonapp.presentation.extensions.viewBinding
 import java.io.File
 import java.io.FileOutputStream
 import java.nio.ByteBuffer
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -76,8 +76,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
         }
         return null
     }
-
-    @RequiresApi(Build.VERSION_CODES.N)
+    
     private fun takePhoto() {
         val imageCapture = imageCapture ?: return
 
@@ -93,7 +92,6 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
                 override fun onError(exc: ImageCaptureException) {
                     Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
                 }
-                @SuppressLint("UnsafeOptInUsageError")
                 override fun onCaptureSuccess(imageP: ImageProxy) {
                     try {
                         val rotation = imageP.imageInfo.rotationDegrees
@@ -101,7 +99,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
                         img = rotateImage(img, rotation.toFloat())
                         if (img != null) {
                             var fos = FileOutputStream(photoFile)
-                            img?.compress(Bitmap.CompressFormat.JPEG, 25, fos)
+                            img?.compress(Bitmap.CompressFormat.JPEG, 50, fos)
                             fos.flush()
                             fos.close()
                         }
