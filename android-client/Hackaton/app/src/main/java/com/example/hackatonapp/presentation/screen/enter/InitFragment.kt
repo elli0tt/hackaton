@@ -6,13 +6,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.hackatonapp.R
-import com.example.hackatonapp.databinding.FragmentAddNoteBinding
+import com.example.hackatonapp.databinding.FragmentInitBinding
 import com.example.hackatonapp.presentation.extensions.viewBinding
 import com.example.hackatonapp.presentation.screen.add_note.AddNoteViewModel
 
 class InitFragment : Fragment(R.layout.fragment_init) {
 
-    private val binding by viewBinding(FragmentAddNoteBinding::bind)
+    private val binding by viewBinding(FragmentInitBinding::bind)
 
     private val viewModel: AddNoteViewModel by viewModels()
 
@@ -24,17 +24,13 @@ class InitFragment : Fragment(R.layout.fragment_init) {
         subscribeToViewModel()
     }
 
-    private fun initViews() {
-
-    }
+    private fun initViews() {}
 
     private fun setListeners() {
-        binding.openCameraButton.setOnClickListener {
-            findNavController().navigate(R.id.navigateToCameraFragment)
+        binding.tvSendToRegistrationTitle.setOnClickListener {
+            findNavController().navigate(R.id.action_initFragment_to_registrationFragment)
         }
     }
 
-    private fun subscribeToViewModel() {
-
-    }
+    private fun subscribeToViewModel() {}
 }
