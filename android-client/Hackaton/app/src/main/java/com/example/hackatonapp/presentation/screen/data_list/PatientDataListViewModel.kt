@@ -2,13 +2,14 @@ package com.example.hackatonapp.presentation.screen.data_list
 
 import android.app.Application
 import android.widget.Filter
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.example.hackatonapp.R
 import com.example.hackatonapp.data.database.entities.PatientNoteEntity
 import com.example.hackatonapp.data.repository.PatientNoteRepositoryImpl
 import com.example.hackatonapp.domain.model.PatientNote
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -38,7 +39,8 @@ class PatientDataListViewModel(application: Application) : AndroidViewModel(appl
                         patientNoteEntity.pulse
                     ),
                     dateCreated = dateFormat.format(date),
-                    timeCreated = timeFormat.format(date)
+                    timeCreated = timeFormat.format(date),
+                    activity = patientNoteEntity.activity
                 )
             }
         }

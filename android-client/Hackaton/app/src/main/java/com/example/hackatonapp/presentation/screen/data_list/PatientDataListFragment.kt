@@ -5,19 +5,17 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hackatonapp.R
 import com.example.hackatonapp.databinding.FragmentPatientDataListBinding
 import com.example.hackatonapp.presentation.adapter.patient_data_list.PatientDataListAdapter
 import com.example.hackatonapp.presentation.extensions.viewBinding
-
 
 class PatientDataListFragment : Fragment(R.layout.fragment_patient_data_list) {
 
@@ -55,7 +53,9 @@ class PatientDataListFragment : Fragment(R.layout.fragment_patient_data_list) {
     }
 
     private fun setListeners() {
-
+        binding.addFab.setOnClickListener {
+            findNavController().navigate(R.id.navigateToAddNoteFragment)
+        }
     }
 
     private fun subscribeToViewModel() {

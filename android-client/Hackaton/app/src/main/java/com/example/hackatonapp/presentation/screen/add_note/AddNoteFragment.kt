@@ -31,6 +31,16 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
         binding.openCameraButton.setOnClickListener {
             findNavController().navigate(R.id.navigateToCameraFragment)
         }
+        binding.saveButton.setOnClickListener {
+            viewModel.onSaveClick(
+                sys = binding.topPressureEditText.text.toString(),
+                dia = binding.bottomPressureEditText.text.toString(),
+                pulse = binding.pulseEditText.text.toString(),
+                activity = binding.activitySpinner.selectedItem as String,
+                comment = binding.commentEditText.text.toString()
+            )
+            findNavController().popBackStack()
+        }
     }
 
     private fun subscribeToViewModel() {
