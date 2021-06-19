@@ -1,5 +1,6 @@
 package com.example.hackatonapp.presentation.screen.sign_up
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -35,7 +36,7 @@ class SignUpFragment : Fragment(R.layout.fragment_registration) {
             val snils = binding.etSnilsRegistration.text.toString()
             val user = User(login, password, "pat", snils)
             if (password.isNotEmpty() && login.isNotEmpty() && snils.isNotEmpty()) {
-                if (password.length > 6) {
+                if (password.length >= 6) {
                     binding.progressBarRegistration.visibility = View.VISIBLE
                     viewModel.getUserToken(user)
                 } else {
@@ -64,7 +65,16 @@ class SignUpFragment : Fragment(R.layout.fragment_registration) {
                 binding.etSnilsRegistration.visibility = View.INVISIBLE
                 findNavController()
                     .navigate(R.id.action_registrationFragment_to_patientDataListFragment)
+                saveToSharedPreferences(response)
             }
         )
+    }
+
+    private fun saveToSharedPreferences(token: String){
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            putString("token", token)
+            apply()
+        }
     }
 }
