@@ -62,10 +62,24 @@ class SignUpFragment : Fragment(R.layout.fragment_registration) {
         viewModel.userToken.observe(
             viewLifecycleOwner,
             Observer { response ->
-                binding.etSnilsRegistration.visibility = View.INVISIBLE
-                findNavController()
-                    .navigate(R.id.action_registrationFragment_to_patientDataListFragment)
-                saveToSharedPreferences(response)
+                when(response){
+                    is Resource.Success -> {
+                        hideProgressBar()
+                        response.data?.let { response ->
+                            saveToSharedPreferences(response)
+                        }
+                        findNavController()
+                            .navigate(R.id.action_registrationFragment_to_patientDataListFragment)
+                    }
+                    is Resource.Error -> {
+                        hideProgressBar()
+                        Toast.makeText(context, "Что-то пошло не так", Toast.LENGTH_SHORT).show()
+                    }
+                    
+                    is Resource.Loading -> {
+                        showProgressBar()
+                    }
+                }
             }
         )
     }
