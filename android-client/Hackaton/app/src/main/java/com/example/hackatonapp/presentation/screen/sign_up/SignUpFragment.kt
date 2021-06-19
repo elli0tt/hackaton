@@ -76,6 +76,7 @@ class SignUpFragment : Fragment(R.layout.fragment_registration) {
                         hideProgressBar()
                         Toast.makeText(context, "Что-то пошло не так", Toast.LENGTH_SHORT).show()
                     }
+                    
                     is Resource.Loading -> {
                         showProgressBar()
                     }
