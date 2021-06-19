@@ -25,7 +25,9 @@ class PatientDataListFragment : Fragment(R.layout.fragment_patient_data_list) {
 
     private val recyclerAdapter = PatientDataListAdapter().apply {
         onItemClickListener = PatientDataListAdapter.OnItemClickListener { position ->
-            viewModel.onListItemClick(position)
+            val action = PatientDataListFragmentDirections.navigateToAddNoteFragment()
+            action.id = viewModel.onListItemClick(position)
+            findNavController().navigate(action)
         }
     }
 

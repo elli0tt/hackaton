@@ -99,8 +99,8 @@ class PatientDataListViewModel(application: Application) : AndroidViewModel(appl
         filter.filter(searchQuery)
     }
 
-    fun onListItemClick(position: Int) {
-
+    fun onListItemClick(position: Int): Int {
+        return listToShow.value?.get(position)?.id ?: 0
     }
 
     private val filter = object : Filter() {
