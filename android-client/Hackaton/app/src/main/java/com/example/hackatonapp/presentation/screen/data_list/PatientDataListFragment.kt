@@ -1,5 +1,6 @@
 package com.example.hackatonapp.presentation.screen.data_list
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -73,7 +74,8 @@ class PatientDataListFragment : Fragment(R.layout.fragment_patient_data_list) {
 
     override fun onStart() {
         super.onStart()
-        viewModel.update()
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        viewModel.update(sharedPref.getString("token", "")!!)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

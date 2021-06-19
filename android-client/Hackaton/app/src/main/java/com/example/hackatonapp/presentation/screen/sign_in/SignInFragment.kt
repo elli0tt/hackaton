@@ -48,14 +48,14 @@ class SignInFragment : Fragment(R.layout.fragment_init) {
                     )
                         .show()
                 }
-            }else {
-            Toast.makeText(
-                context,
-                "Все поля должны быть заполнены",
-                Toast.LENGTH_SHORT
-            )
-                .show()
-        }
+            } else {
+                Toast.makeText(
+                    context,
+                    "Все поля должны быть заполнены",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
             binding.progressBar.visibility = View.VISIBLE
             viewModel.getUserToken(user)
         }
@@ -69,14 +69,14 @@ class SignInFragment : Fragment(R.layout.fragment_init) {
         viewModel.userToken.observe(
             viewLifecycleOwner,
             Observer { response ->
-                when(response){
+                when (response) {
                     is Resource.Success -> {
                         binding.progressBar.visibility = View.INVISIBLE
                         response.data?.let { response ->
                             saveToSharedPreferences(response)
                         }
                         findNavController()
-                            .navigate(R.id.action_initFragment_to_patientDataListFragment)
+                            .navigate(R.id.patientDataListFragment)
                     }
                     is Resource.Error -> {
                         binding.progressBar.visibility = View.INVISIBLE
@@ -95,9 +95,9 @@ class SignInFragment : Fragment(R.layout.fragment_init) {
         )
     }
 
-    private fun saveToSharedPreferences(token: String){
+    private fun saveToSharedPreferences(token: String) {
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-        with (sharedPref.edit()) {
+        with(sharedPref.edit()) {
             putString("token", token)
             apply()
         }

@@ -6,6 +6,7 @@ import com.example.hackatonapp.data.database.AppRoomDatabase
 import com.example.hackatonapp.data.database.dao.PatientNoteDao
 import com.example.hackatonapp.data.database.entities.PatientNoteEntity
 import com.example.hackatonapp.data.network.NetworkDataSource
+import com.example.hackatonapp.data.network.body.PostNoteBody
 import com.example.hackatonapp.domain.repository.PatientNoteRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -36,8 +37,8 @@ class PatientNoteRepositoryImpl(context: Context) : PatientNoteRepository {
         return patientNoteDao.getNoteById(id)
     }
 
-    override fun loadAllNotesFromNetwork() {
-        patientApi.getAllNotes("7ea7217c-a414-4f99-a8df-1d4a236cca02")
+    override fun loadAllNotesFromNetwork(token: String) {
+        patientApi.getAllNotes(token)
             .enqueue(object : Callback<List<PatientNoteEntity>> {
                 override fun onResponse(
                     call: Call<List<PatientNoteEntity>>,

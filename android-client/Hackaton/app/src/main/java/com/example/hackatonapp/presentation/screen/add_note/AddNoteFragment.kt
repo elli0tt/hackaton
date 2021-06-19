@@ -1,7 +1,10 @@
 package com.example.hackatonapp.presentation.screen.add_note
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -9,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.hackatonapp.R
 import com.example.hackatonapp.databinding.FragmentAddNoteBinding
 import com.example.hackatonapp.presentation.extensions.viewBinding
+import com.example.hackatonapp.utils.Resource
 
 class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
 
@@ -21,13 +25,8 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initViews()
         setListeners()
         subscribeToViewModel()
-    }
-
-    private fun initViews() {
-
     }
 
     private fun setListeners() {
@@ -35,14 +34,16 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
             findNavController().navigate(R.id.navigateToCameraFragment)
         }
         binding.saveButton.setOnClickListener {
+            val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+
             viewModel.onSaveClick(
                 sys = binding.topPressureEditText.text.toString(),
                 dia = binding.bottomPressureEditText.text.toString(),
                 pulse = binding.pulseEditText.text.toString(),
                 activity = binding.activitySpinner.selectedItem as String,
-                comment = binding.commentEditText.text.toString()
+                comment = binding.commentEditText.text.toString(),
+                sharedPref!!.getString("token", "")!!
             )
-            findNavController().popBackStack()
         }
     }
 
@@ -61,6 +62,29 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
                     )
                 )
                 commentEditText.setText(patientNoteEntity.comment)
+            }
+        }
+
+        viewModel.saveResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is Resource.Loading -> {
+                    binding.progressBar.isVisible = true
+                    binding.loadingView.isVisible = true
+                }
+                is Resource.Error -> {
+                    binding.progressBar.isVisible = false
+                    binding.loadingView.isVisible = false
+                    Toast.makeText(
+                        context,
+                        getString(R.string.something_went_wrong),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is Resource.Success -> {
+                    binding.progressBar.isVisible = false
+                    binding.loadingView.isVisible = false
+                    findNavController().popBackStack()
+                }
             }
         }
 

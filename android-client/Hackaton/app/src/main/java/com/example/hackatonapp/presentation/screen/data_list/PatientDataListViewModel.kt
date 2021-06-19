@@ -26,7 +26,7 @@ class PatientDataListViewModel(application: Application) : AndroidViewModel(appl
     val allNotes: LiveData<List<PatientNote>> =
         Transformations.map(patientNoteRepository.getAllNotes()) {
             it.map { patientNoteEntity ->
-                val date = Date(patientNoteEntity.dateTimeCreated)
+                val date = Date(patientNoteEntity.dateTime)
                 PatientNote(
                     id = patientNoteEntity.id,
                     pressure = application.getString(
@@ -66,7 +66,7 @@ class PatientDataListViewModel(application: Application) : AndroidViewModel(appl
                     sys = 160,
                     dia = 50,
                     pulse = 66,
-                    dateTimeCreated = currentDate,
+                    dateTime = currentDate,
                     patientSNILS = ""
                 )
             )
@@ -77,7 +77,7 @@ class PatientDataListViewModel(application: Application) : AndroidViewModel(appl
                 sys = 180,
                 dia = 200,
                 pulse = 66,
-                dateTimeCreated = currentDate,
+                dateTime = currentDate,
                 patientSNILS = ""
             )
         )
@@ -87,7 +87,7 @@ class PatientDataListViewModel(application: Application) : AndroidViewModel(appl
                 sys = 120,
                 dia = 400,
                 pulse = 666,
-                dateTimeCreated = currentDate,
+                dateTime = currentDate,
                 patientSNILS = ""
             )
         )
@@ -138,7 +138,7 @@ class PatientDataListViewModel(application: Application) : AndroidViewModel(appl
         filter.filter(query)
     }
 
-    fun update() {
-        patientNoteRepository.loadAllNotesFromNetwork()
+    fun update(token: String) {
+        patientNoteRepository.loadAllNotesFromNetwork(token)
     }
 }
