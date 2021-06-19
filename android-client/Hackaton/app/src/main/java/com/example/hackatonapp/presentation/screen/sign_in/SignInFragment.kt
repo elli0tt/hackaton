@@ -22,6 +22,11 @@ class SignInFragment : Fragment(R.layout.fragment_init) {
     private val viewModel: SignInViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        val oldToken = sharedPref.getString("token", "none")
+        if (oldToken != "none") {
+            findNavController().navigate(R.id.action_initFragment_to_patientDataListFragment)
+        }
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
