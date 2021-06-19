@@ -20,7 +20,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/top_pressure_edit_text"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -35,7 +36,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/bottom_pressure_edit_text"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -50,7 +52,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/pulse_edit_text"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -84,6 +87,7 @@
                 android:id="@+id/comment_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="top"
                 android:minHeight="200dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
