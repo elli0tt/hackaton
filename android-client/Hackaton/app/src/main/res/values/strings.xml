@@ -30,4 +30,6 @@
     <string name="settings">Настройки</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="when_we_send_notifications">Каждый день в %1$s мы будем присылать вам уведомления!</string>
+    <string name="exit">Выход</string>
 </resources>
