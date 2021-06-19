@@ -1,8 +1,8 @@
 package com.example.hackatonapp.data.entities
 
 data class User(
-    val name: String,
+    val username: String,
     val password: String,
-    val isPatient: Boolean,
-    val snils: String
+    val type: String =  "pat",
+    val snils: String? = null
 )

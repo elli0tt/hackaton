@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/etLoginRegistration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -31,33 +31,33 @@
         app:layout_constraintTop_toBottomOf="@+id/tvRegistrationTitle" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/etPasswordRegistration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:textSize="24sp"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:hint="Пароль"
         android:layout_marginTop="45dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/etLoginRegistration" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/etSnilsRegistration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:hint="Снилс"
         android:textSize="24sp"
         android:layout_marginTop="45dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+        app:layout_constraintTop_toBottomOf="@+id/etPasswordRegistration" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonStartRegistration"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="75dp"
@@ -68,5 +68,16 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
+        app:layout_constraintTop_toBottomOf="@+id/etSnilsRegistration" />
+
+    <ProgressBar
+        android:id="@+id/progressBarRegistration"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/buttonStartRegistration"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etSnilsRegistration" />
 </androidx.constraintlayout.widget.ConstraintLayout>
