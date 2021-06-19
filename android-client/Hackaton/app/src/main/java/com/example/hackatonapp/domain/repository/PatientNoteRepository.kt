@@ -10,4 +10,6 @@ interface PatientNoteRepository {
     suspend fun insertPatientNote(patientNote: PatientNoteEntity)
 
     suspend fun updatePatientNote(patientNote: PatientNoteEntity)
+
+    suspend fun getNoteById(id: Int): PatientNoteEntity
 }

@@ -18,4 +18,7 @@ interface PatientNoteDao {
 
     @Update
     suspend fun updatePatientNote(patientNote: PatientNoteEntity)
+
+    @Query("SELECT * FROM ${PatientNoteEntity.TABLE_NAME} WHERE id == :id")
+    suspend fun getNoteById(id: Int): PatientNoteEntity
 }
