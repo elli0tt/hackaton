@@ -32,7 +32,7 @@
         tools:layout="@layout/fragment_camera" />
     <fragment
         android:id="@+id/initFragment"
-        android:name="com.example.hackatonapp.presentation.screen.enter.InitFragment"
+        android:name="com.example.hackatonapp.presentation.screen.sign_in.SignInFragment"
         android:label="InitFragment" >
         <action
             android:id="@+id/action_initFragment_to_registrationFragment"
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="com.example.hackatonapp.presentation.screen.enter.RegistrationFragment"
+        android:name="com.example.hackatonapp.presentation.screen.sign_up.SignUpFragment"
         android:label="RegistrationFragment" >
         <action
             android:id="@+id/action_registrationFragment_to_patientDataListFragment"
