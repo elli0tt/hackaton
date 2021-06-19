@@ -1,5 +1,6 @@
 package com.example.hackatonapp.presentation.screen.sign_in
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -11,6 +12,8 @@ import com.example.hackatonapp.R
 import com.example.hackatonapp.data.entities.User
 import com.example.hackatonapp.databinding.FragmentInitBinding
 import com.example.hackatonapp.presentation.extensions.viewBinding
+import com.example.hackatonapp.utils.Resource
+
 
 class SignInFragment : Fragment(R.layout.fragment_init) {
 
@@ -66,10 +69,37 @@ class SignInFragment : Fragment(R.layout.fragment_init) {
         viewModel.userToken.observe(
             viewLifecycleOwner,
             Observer { response ->
-                binding.progressBar.visibility = View.INVISIBLE
-                findNavController()
-                    .navigate(R.id.action_initFragment_to_patientDataListFragment)
+                when(response){
+                    is Resource.Success -> {
+                        binding.progressBar.visibility = View.INVISIBLE
+                        response.data?.let { response ->
+                            saveToSharedPreferences(response)
+                        }
+                        findNavController()
+                            .navigate(R.id.action_initFragment_to_patientDataListFragment)
+                    }
+                    is Resource.Error -> {
+                        binding.progressBar.visibility = View.INVISIBLE
+                        Toast.makeText(context, "Что-то пошло не так", Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {
+                        Toast.makeText(context, "Что-то пошло не так", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+//                findNavController()
+//                    .navigate(R.id.action_initFragment_to_patientDataListFragment)
+//
+//                saveToSharedPreferences(response)
             }
         )
+    }
+
+    private fun saveToSharedPreferences(token: String){
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            putString("token", token)
+            apply()
+        }
     }
 }

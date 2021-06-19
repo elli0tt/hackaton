@@ -4,6 +4,7 @@ import com.example.hackatonapp.data.database.entities.PatientEntity
 import com.example.hackatonapp.data.database.entities.PatientNoteEntity
 import com.example.hackatonapp.data.entities.User
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 interface PatientApi {
@@ -20,5 +21,5 @@ interface PatientApi {
 
     @Headers("Content-Type: application/json")
     @POST("log/{type}")
-    suspend fun signInUser(@Path("type") type: String, @Body user: User): String
+    suspend fun signInUser(@Path("type") type: String, @Body user: User): Response<String>
 }
