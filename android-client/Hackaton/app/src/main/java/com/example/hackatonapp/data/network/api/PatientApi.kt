@@ -12,7 +12,7 @@ interface PatientApi {
     fun getPatient(@Path("token") token: String): Call<PatientEntity>
 
     @GET("{token}/readings")
-    fun getAllNotes(@Path("token") token: String): Call<PatientNoteEntity>
+    fun getAllNotes(@Path("token") token: String): Call<List<PatientNoteEntity>>
 
     @Headers("Content-Type: application/json")
     @POST("reg/{type}")

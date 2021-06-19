@@ -1,10 +1,7 @@
 package com.example.hackatonapp.data.database.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.example.hackatonapp.data.database.entities.PatientNoteEntity
 
 @Dao
@@ -13,10 +10,10 @@ interface PatientNoteDao {
     @Query("SELECT * FROM ${PatientNoteEntity.TABLE_NAME}")
     fun getAllNotes(): LiveData<List<PatientNoteEntity>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPatientNote(patientNote: PatientNoteEntity)
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updatePatientNote(patientNote: PatientNoteEntity)
 
     @Query("SELECT * FROM ${PatientNoteEntity.TABLE_NAME} WHERE id == :id")

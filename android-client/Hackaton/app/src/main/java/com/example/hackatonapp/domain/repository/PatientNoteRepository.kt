@@ -12,4 +12,6 @@ interface PatientNoteRepository {
     suspend fun updatePatientNote(patientNote: PatientNoteEntity)
 
     suspend fun getNoteById(id: Int): PatientNoteEntity
+
+    fun loadAllNotesFromNetwork()
 }

@@ -71,6 +71,11 @@ class PatientDataListFragment : Fragment(R.layout.fragment_patient_data_list) {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.update()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_patient_data_list, menu)
         super.onCreateOptionsMenu(menu, inflater)

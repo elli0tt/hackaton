@@ -137,4 +137,8 @@ class PatientDataListViewModel(application: Application) : AndroidViewModel(appl
         searchQuery = query
         filter.filter(query)
     }
+
+    fun update() {
+        patientNoteRepository.loadAllNotesFromNetwork()
+    }
 }
