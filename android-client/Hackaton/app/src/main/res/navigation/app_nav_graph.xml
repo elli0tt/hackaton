@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_nav_graph"
-    app:startDestination="@id/patientDataListFragment">
+    app:startDestination="@id/initFragment">
 
     <fragment
         android:id="@+id/patientDataListFragment"
@@ -42,4 +42,23 @@
         android:name="com.example.hackatonapp.presentation.screen.camera.CameraFragment"
         android:label="CameraFragment"
         tools:layout="@layout/fragment_camera" />
+    <fragment
+        android:id="@+id/initFragment"
+        android:name="com.example.hackatonapp.presentation.screen.sign_in.SignInFragment"
+        android:label="InitFragment" >
+        <action
+            android:id="@+id/action_initFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_initFragment_to_patientDataListFragment"
+            app:destination="@id/patientDataListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="com.example.hackatonapp.presentation.screen.sign_up.SignUpFragment"
+        android:label="RegistrationFragment" >
+        <action
+            android:id="@+id/action_registrationFragment_to_patientDataListFragment"
+            app:destination="@id/patientDataListFragment" />
+    </fragment>
 </navigation>
