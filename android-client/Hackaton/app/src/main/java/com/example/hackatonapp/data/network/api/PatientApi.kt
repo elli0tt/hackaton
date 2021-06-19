@@ -17,7 +17,7 @@ interface PatientApi {
 
     @Headers("Content-Type: application/json")
     @POST("reg/{type}")
-    suspend fun registrationUser(@Body user: User, @Path("type") type: String): String
+    suspend fun registrationUser(@Body user: User, @Path("type") type: String): Response<String>
 
     @Headers("Content-Type: application/json")
     @POST("log/{type}")
