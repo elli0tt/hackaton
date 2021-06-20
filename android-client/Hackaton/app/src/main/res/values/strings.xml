@@ -34,10 +34,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="when_we_send_notifications">Каждый день в %1$s мы будем присылать вам уведомления!</string>
-    <string name="exit">Выход</string>
+    <string name="exit">Выйти из аккаунта</string>
 
     <string name="password_length_error_message">Пароль должен содержать более 6 символов</string>
     <string name="all_fields_should_be_filled_error_message">Все поля должны быть заполнены</string>
     <string name="sign_up_registration_title">Регистрация</string>
     <string name="sign_up_hint_login">Логин</string>
+    <string name="camera_instruction">Наведите телефон так, \nчтобы данные тонометра попали в рамочку.\nДержите устройство под прямым углом</string>
+    <string name="settings_receive_notifications">Получать уведомления</string>
 </resources>

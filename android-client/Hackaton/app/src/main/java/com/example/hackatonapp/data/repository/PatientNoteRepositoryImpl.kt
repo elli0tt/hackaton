@@ -6,7 +6,6 @@ import com.example.hackatonapp.data.database.AppRoomDatabase
 import com.example.hackatonapp.data.database.dao.PatientNoteDao
 import com.example.hackatonapp.data.database.entities.PatientNoteEntity
 import com.example.hackatonapp.data.network.NetworkDataSource
-import com.example.hackatonapp.data.network.body.PostNoteBody
 import com.example.hackatonapp.domain.repository.PatientNoteRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
