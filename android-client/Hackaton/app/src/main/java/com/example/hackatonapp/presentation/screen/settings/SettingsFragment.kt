@@ -7,6 +7,7 @@ import android.text.format.DateFormat
 import android.view.View
 import android.widget.TimePicker
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.hackatonapp.R
 import com.example.hackatonapp.databinding.FragmentSettingsBinding
@@ -18,6 +19,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), TimePickerDialog.
 
     private val binding by viewBinding(FragmentSettingsBinding::bind)
 
+    private val viewModel: SettingsViewModel by viewModels()
+
     var hour: Int = 0
     var minute: Int = 0
     var myHour: Int = 0
@@ -27,18 +30,15 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), TimePickerDialog.
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        localData = LocalData(requireContext());
+
+        localData = LocalData(requireContext())
         binding.switch1.isChecked = localData.reminderStatus
         if (binding.switch1.isChecked) {
             binding.tvWhenWeSendNotifications.text = localData.textStatus
             binding.tvWhenWeSendNotifications.visibility = View.VISIBLE
         }
-        initViews()
         setListeners()
-        subscribeToViewModel()
     }
-
-    private fun initViews() {}
 
     private fun setListeners() {
         binding.switch1.setOnClickListener {
@@ -63,11 +63,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), TimePickerDialog.
         binding.buttonExit.setOnClickListener {
             val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
             sharedPref?.edit()?.remove("token")?.apply()
+            viewModel.onLogoutClick()
             findNavController().navigate(R.id.initFragment)
         }
     }
-
-    private fun subscribeToViewModel() {}
 
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         myHour = hourOfDay
