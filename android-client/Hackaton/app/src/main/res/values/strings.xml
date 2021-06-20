@@ -40,4 +40,5 @@
     <string name="all_fields_should_be_filled_error_message">Все поля должны быть заполнены</string>
     <string name="sign_up_registration_title">Регистрация</string>
     <string name="sign_up_hint_login">Логин</string>
+    <string name="camera_instruction">Наведите телефон так, \nчтобы данные тонометра попали в рамочку.\nДержите устройство под прямым углом</string>
 </resources>
