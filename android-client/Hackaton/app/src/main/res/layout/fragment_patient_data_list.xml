@@ -10,7 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/purple_500"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+        app:titleTextColor="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/Theme.MaterialComponents.DayNight.DarkActionBar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
