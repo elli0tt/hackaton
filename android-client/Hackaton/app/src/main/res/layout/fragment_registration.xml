@@ -17,44 +17,70 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/etLoginRegistration"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/login_sign_up_text_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:textSize="24sp"
-        android:inputType="textPersonName"
         android:hint="Логин"
+        android:textSize="24sp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRegistrationTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvRegistrationTitle">
 
-    <EditText
-        android:id="@+id/etPasswordRegistration"
-        android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/login_sign_up_text_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password_sign_up_text_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:hint="@string/password"
         android:textSize="24sp"
-        android:inputType="textPassword"
-        android:hint="Пароль"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:passwordToggleEnabled="true"
         android:layout_marginTop="45dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etLoginRegistration" />
+        app:layout_constraintTop_toBottomOf="@+id/login_sign_up_text_input_layout" >
 
-    <EditText
-        android:id="@+id/etSnilsRegistration"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_sign_up_text_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/snils_sign_up_text_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        android:hint="Снилс"
+        android:hint="@string/snils"
         android:textSize="24sp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="45dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPasswordRegistration" />
+        app:layout_constraintTop_toBottomOf="@+id/password_sign_up_text_input_layout" >
+
+    <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/snils_sign_up_text_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
         android:id="@+id/buttonStartRegistration"
@@ -63,12 +89,12 @@
         android:layout_marginTop="75dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Зарегистрироваться"
+        android:text="@string/sign_up"
         android:textAllCaps="false"
-        android:textSize="24sp"
+        android:textSize="@dimen/standard_big_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etSnilsRegistration" />
+        app:layout_constraintTop_toBottomOf="@+id/snils_sign_up_text_input_layout" />
 
     <ProgressBar
         android:id="@+id/progressBarRegistration"
@@ -79,5 +105,5 @@
         app:layout_constraintBottom_toTopOf="@+id/buttonStartRegistration"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etSnilsRegistration" />
+        app:layout_constraintTop_toBottomOf="@+id/snils_sign_up_text_input_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

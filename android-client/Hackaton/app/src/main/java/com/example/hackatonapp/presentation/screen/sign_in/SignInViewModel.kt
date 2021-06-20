@@ -14,12 +14,12 @@ import retrofit2.Response
 class SignInViewModel(application: Application) : AndroidViewModel(application) {
     val userToken = MutableLiveData<Resource<String>>()
 
-    fun getUserToken(user: User){
-        viewModelScope.launch(Dispatchers.IO) {
+    fun getUserToken(user: User) = viewModelScope.launch(Dispatchers.IO) {
+            userToken.postValue(Resource.Loading())
             val response = NetworkDataSource.getPatientApi().signInUser(user.type, user)
             userToken.postValue(handleBreakingNewsResponse(response))
-        }
     }
+
 
     private fun handleBreakingNewsResponse(response: Response<String>) : Resource<String> {
         if(response.isSuccessful) {

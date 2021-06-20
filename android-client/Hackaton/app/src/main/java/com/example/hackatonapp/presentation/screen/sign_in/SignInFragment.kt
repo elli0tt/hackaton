@@ -22,6 +22,11 @@ class SignInFragment : Fragment(R.layout.fragment_init) {
     private val viewModel: SignInViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        val oldToken = sharedPref.getString("token", "none")
+        if (oldToken != "none") {
+            findNavController().navigate(R.id.action_initFragment_to_patientDataListFragment)
+        }
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
@@ -33,8 +38,8 @@ class SignInFragment : Fragment(R.layout.fragment_init) {
 
     private fun setListeners() {
         binding.button.setOnClickListener {
-            val login = binding.etLogin.text.toString()
-            val password = binding.etPassword.text.toString()
+            val login = binding.loginSignInTextEdit.text.toString()
+            val password = binding.passwordSignInTextEdit.text.toString()
             val user = User(login, password)
             if (password.isNotEmpty() && login.isNotEmpty()) {
                 if (password.length > 6) {
@@ -49,15 +54,13 @@ class SignInFragment : Fragment(R.layout.fragment_init) {
                         .show()
                 }
             }else {
-            Toast.makeText(
-                context,
-                "Все поля должны быть заполнены",
-                Toast.LENGTH_SHORT
-            )
-                .show()
-        }
-            binding.progressBar.visibility = View.VISIBLE
-            viewModel.getUserToken(user)
+                Toast.makeText(
+                    context,
+                    "Все поля должны быть заполнены",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
         }
         binding.tvSendToRegistrationTitle.setOnClickListener {
             findNavController()
@@ -71,7 +74,7 @@ class SignInFragment : Fragment(R.layout.fragment_init) {
             Observer { response ->
                 when(response){
                     is Resource.Success -> {
-                        binding.progressBar.visibility = View.INVISIBLE
+                        hideProgressBar()
                         response.data?.let { response ->
                             saveToSharedPreferences(response)
                         }
@@ -79,21 +82,25 @@ class SignInFragment : Fragment(R.layout.fragment_init) {
                             .navigate(R.id.action_initFragment_to_patientDataListFragment)
                     }
                     is Resource.Error -> {
-                        binding.progressBar.visibility = View.INVISIBLE
+                        hideProgressBar()
                         Toast.makeText(context, "Что-то пошло не так", Toast.LENGTH_SHORT).show()
                     }
-                    else -> {
-                        Toast.makeText(context, "Что-то пошло не так", Toast.LENGTH_SHORT).show()
+                    is Resource.Loading -> {
+                        showProgressBar()
                     }
                 }
-
-//                findNavController()
-//                    .navigate(R.id.action_initFragment_to_patientDataListFragment)
-//
-//                saveToSharedPreferences(response)
             }
         )
     }
+
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.INVISIBLE
+    }
+
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
 
     private fun saveToSharedPreferences(token: String){
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return

@@ -7,7 +7,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 object NetworkDataSource {
 
     private const val BASE_URL = "http://95.79.175.202:14332/api/"
