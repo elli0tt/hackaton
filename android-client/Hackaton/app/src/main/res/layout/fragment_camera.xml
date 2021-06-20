@@ -23,7 +23,17 @@
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="116dp"
+            android:layout_height="100dp"
+            android:indeterminate="true"
+            android:visibility="visible"
+            android:layout_gravity="center"
+            />
+    </androidx.camera.view.PreviewView>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/instruction_text_view"

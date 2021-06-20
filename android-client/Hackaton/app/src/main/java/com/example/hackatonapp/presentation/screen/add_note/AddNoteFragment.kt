@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.text.set
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,6 +14,7 @@ import com.example.hackatonapp.R
 import com.example.hackatonapp.databinding.FragmentAddNoteBinding
 import com.example.hackatonapp.presentation.extensions.viewBinding
 import com.example.hackatonapp.utils.Resource
+import java.util.ArrayList
 
 class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
 
@@ -27,6 +29,23 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
 
         setListeners()
         subscribeToViewModel()
+
+    }
+
+    private fun getFromSharedPreferences() {
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        val sys = sharedPref.getString("SYS", "")
+        if (sys != "" && sys != "-1") {
+            binding.topPressureEditText.setText(sys)
+        }
+        val dia = sharedPref.getString("DIA", "")
+        if (dia != "" && dia != "-1") {
+            binding.bottomPressureEditText.setText(dia)
+        }
+        val pulse = sharedPref.getString("Pulse", "")
+        if (pulse != "" && pulse != "-1") {
+            binding.pulseEditText.setText(pulse)
+        }
     }
 
     private fun setListeners() {
