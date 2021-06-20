@@ -19,13 +19,12 @@ class AppNavHostActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNav)
+        bottomNavigationView = findViewById(R.id.bottomNav)
         bottomNavigationView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.initFragment -> hideBottomNav()
-                R.id.registrationFragment -> hideBottomNav()
+                R.id.initFragment, R.id.registrationFragment, R.id.cameraFragment -> hideBottomNav()
                 else -> showBottomNav()
             }
         }
