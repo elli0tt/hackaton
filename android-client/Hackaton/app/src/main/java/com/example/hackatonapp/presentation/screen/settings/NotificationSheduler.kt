@@ -7,12 +7,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.media.RingtoneManager
 import android.os.Build
-import android.util.Log
-import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat.getSystemService
 import java.util.*
 
 
@@ -84,7 +80,8 @@ object NotificationScheduler {
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel("3", "My channel default priority",
+            val channel = NotificationChannel(
+                "3", "My channel default priority",
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             channel.description = "My channel description"
@@ -98,7 +95,8 @@ object NotificationScheduler {
         myIntent.putExtra("mode", "standard")
 
         val builder = NotificationCompat.Builder(
-            context, "3")
+            context, "3"
+        )
             .setContentTitle("Напоминание")
             .setContentText("Пора проверить давление и записать данные!")
             .setSmallIcon(R.drawable.ic_lock_idle_alarm)

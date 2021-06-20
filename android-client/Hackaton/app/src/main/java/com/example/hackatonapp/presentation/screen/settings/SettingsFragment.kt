@@ -40,7 +40,7 @@ class SettingsFragment :
         super.onViewCreated(view, savedInstanceState)
         localData = LocalData(view?.context);
         binding.switch1.isChecked = localData.reminderStatus
-        if(binding.switch1.isChecked) {
+        if (binding.switch1.isChecked) {
             binding.tvWhenWeSendNotifications.text = localData.textStatus
             binding.tvWhenWeSendNotifications.visibility = View.VISIBLE
         }
@@ -59,7 +59,13 @@ class SettingsFragment :
                 hour = calendar.get(Calendar.HOUR)
                 minute = calendar.get(Calendar.MINUTE)
                 val timePickerDialog =
-                    TimePickerDialog(view?.context!!, this, hour, minute, DateFormat.is24HourFormat(view?.context))
+                    TimePickerDialog(
+                        view?.context!!,
+                        this,
+                        hour,
+                        minute,
+                        DateFormat.is24HourFormat(view?.context)
+                    )
                 timePickerDialog.show()
             } else {
                 binding.tvWhenWeSendNotifications.visibility = View.GONE
@@ -78,7 +84,7 @@ class SettingsFragment :
         myHour = hourOfDay
         myMinute = minute
         var timeLine: String
-        timeLine = if (myMinute < 10){
+        timeLine = if (myMinute < 10) {
             "$hourOfDay:0$minute"
         } else {
             "$hourOfDay:$minute"
@@ -93,6 +99,7 @@ class SettingsFragment :
 
 
         binding.tvWhenWeSendNotifications.visibility = View.VISIBLE
-        binding.tvWhenWeSendNotifications.text = resources.getString(R.string.when_we_send_notifications, timeLine);
+        binding.tvWhenWeSendNotifications.text =
+            resources.getString(R.string.when_we_send_notifications, timeLine);
     }
 }

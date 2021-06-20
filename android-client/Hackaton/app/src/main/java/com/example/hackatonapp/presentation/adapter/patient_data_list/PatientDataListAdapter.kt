@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.example.hackatonapp.data.database.entities.PatientNoteEntity
 import com.example.hackatonapp.databinding.ListItemPatientDataBinding
 import com.example.hackatonapp.domain.model.PatientNote
 
