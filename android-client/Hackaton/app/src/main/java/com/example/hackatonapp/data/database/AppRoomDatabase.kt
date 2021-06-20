@@ -4,16 +4,22 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.hackatonapp.data.database.dao.DoctorMessagesDao
 import com.example.hackatonapp.data.database.dao.PatientDao
 import com.example.hackatonapp.data.database.dao.PatientNoteDao
+import com.example.hackatonapp.data.database.entities.DoctorMessageEntity
 import com.example.hackatonapp.data.database.entities.PatientEntity
 import com.example.hackatonapp.data.database.entities.PatientNoteEntity
 
-@Database(entities = [PatientEntity::class, PatientNoteEntity::class], version = 1)
+@Database(
+    entities = [PatientEntity::class, PatientNoteEntity::class, DoctorMessageEntity::class],
+    version = 1
+)
 abstract class AppRoomDatabase : RoomDatabase() {
 
     abstract val patientDao: PatientDao
     abstract val patientNoteDao: PatientNoteDao
+    abstract val doctorMessagesDao: DoctorMessagesDao
 
     companion object {
         @Volatile

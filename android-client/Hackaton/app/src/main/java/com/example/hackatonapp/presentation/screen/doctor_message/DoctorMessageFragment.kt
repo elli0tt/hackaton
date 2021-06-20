@@ -1,60 +1,74 @@
 package com.example.hackatonapp.presentation.screen.doctor_message
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.hackatonapp.R
+import com.example.hackatonapp.databinding.FragmentDoctorMessageBinding
+import com.example.hackatonapp.presentation.adapter.doctor_messages.DoctorMessagesAdapter
+import com.example.hackatonapp.presentation.extensions.viewBinding
+import com.example.hackatonapp.utils.Resource
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [DoctorMessageFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DoctorMessageFragment : Fragment(R.layout.fragment_doctor_message) {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private val binding by viewBinding(FragmentDoctorMessageBinding::bind)
+
+    private val viewModel: DoctorMessageViewModel by viewModels()
+
+    private val recyclerAdapter = DoctorMessagesAdapter()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initViews()
+        setListeners()
+        subscribeToViewModel()
+    }
+
+    private fun initViews() {
+        binding.recyclerView.apply {
+            adapter = recyclerAdapter
+            setHasFixedSize(true)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_doctor_message, container, false)
+    private fun setListeners() {
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DoctorMessageFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DoctorMessageFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun subscribeToViewModel() {
+        viewModel.messages.observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Loading -> {
+                    binding.progressBar.isVisible = true
+                    binding.loadingView.isVisible = true
+                }
+                is Resource.Error -> {
+                    binding.progressBar.isVisible = false
+                    binding.loadingView.isVisible = false
+                    Toast.makeText(
+                        context,
+                        getString(R.string.something_went_wrong),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is Resource.Success -> {
+                    binding.progressBar.isVisible = false
+                    binding.loadingView.isVisible = false
+                    recyclerAdapter.submitList(it.data)
                 }
             }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        viewModel.update(sharedPref.getString("token", "")!!)
     }
 }
