@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using WebApi.Data;
 using WebApi.Enums;
@@ -10,15 +11,15 @@ using WebApi.Tools;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("api/{token}/readings")]
-    public class ReadingController : ControllerBase
+    [Route("api2/{token}/readings")]
+    public class ReadingController2 : ControllerBase
     {
         private readonly ApplicationContext _context;
         private readonly PatientRepository _patient;
         private readonly LoginRepository _login;
         private readonly ReadingRepository _reading;
 
-        public ReadingController(ApplicationContext context)
+        public ReadingController2(ApplicationContext context)
         {
             _context = context;
             _patient = new PatientRepository(_context);
@@ -111,13 +112,14 @@ namespace WebApi.Controllers
 #endif
         }
 
-        [HttpPost]
-        public IActionResult Create(string token, [FromBody] TonometerReadingFromUser item)
+        [HttpPost("{json}")]
+        public IActionResult Create(string token, string json)
         {
 #if RELEASE
             try
             {
 #endif
+            var item = JsonConvert.DeserializeObject<TonometerReadingFromUser>(json);
             if (item == null || !ModelState.IsValid)
                 return BadRequest(Constants.bodyItemIncorrect);
 
@@ -153,13 +155,15 @@ namespace WebApi.Controllers
 #endif
         }
 
-        [HttpPut]
-        public IActionResult Edit(string token, [FromBody] TonometerReadingFromUser item)
+        [HttpPut("{json}")]
+        public IActionResult Edit(string token, string json)
         {
 #if RELEASE
             try
             {
 #endif
+
+            var item = JsonConvert.DeserializeObject<TonometerReadingFromUser>(json);
             var login = GetLogin(token, out string error);
             if (login is null)
                 return Conflict(error);

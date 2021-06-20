@@ -7,19 +7,20 @@ using WebApi.Models;
 using WebApi.Models.Support;
 using WebApi.Repositories;
 using WebApi.Tools;
+using Newtonsoft.Json;
 
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("api/log/{type}")]
-    public class LogController : ControllerBase
+    [Route("api2/log/{type}")]
+    public class LogController2 : ControllerBase
     {
         private readonly ApplicationContext _context;
         private readonly LoginRepository _login;
         private readonly PatientRepository _patient;
         private readonly DoctorRepository _doctor;
 
-        public LogController(ApplicationContext context)
+        public LogController2(ApplicationContext context)
         {
             _context = context;
             _login = new LoginRepository(_context);
@@ -27,13 +28,15 @@ namespace WebApi.Controllers
             _doctor = new DoctorRepository(_context);
         }
 
-        [HttpPost]
-        public IActionResult Log(string type, [FromBody] LogPass item)
+        [HttpPost("{json}")]
+        public IActionResult Log(string type, string json)
         {
 #if RELEASE
             try
             {
 #endif
+            var item = JsonConvert.DeserializeObject<LogPass>(json);
+
             bool isDoc;
             if (type == "doc")
                 isDoc = true;

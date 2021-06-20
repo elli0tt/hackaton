@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using WebApi.Data;
 using WebApi.Enums;
@@ -10,15 +11,15 @@ using WebApi.Tools;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("api/reg/{type}")]
-    public class RegController : ControllerBase
+    [Route("api2/reg/{type}")]
+    public class RegController2 : ControllerBase
     {
         private readonly ApplicationContext _context;
         private readonly LoginRepository _login;
         private readonly PatientRepository _patient;
         private readonly DoctorRepository _doctor;
 
-        public RegController(ApplicationContext context)
+        public RegController2(ApplicationContext context)
         {
             _context = context;
             _login = new LoginRepository(_context);
@@ -26,13 +27,14 @@ namespace WebApi.Controllers
             _doctor = new DoctorRepository(_context);
         }
 
-        [HttpPost]
-        public IActionResult Reg(string type, [FromBody] LogPass item)
+        [HttpPost("{json}")]
+        public IActionResult Reg(string type, string json)
         {
 #if RELEASE
             try
             {
 #endif
+            var item = JsonConvert.DeserializeObject<LogPass>(json);
             bool isDoc;
                 if (type == "doc")
                     isDoc = true;

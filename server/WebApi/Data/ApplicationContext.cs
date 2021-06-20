@@ -14,5 +14,6 @@ namespace WebApi.Data
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Login> Logins { get; set; }
         public DbSet<TonometerReading> Readings { get; set; }
+        public DbSet<DoctorComment> Comments { get; set; }
     }
 }

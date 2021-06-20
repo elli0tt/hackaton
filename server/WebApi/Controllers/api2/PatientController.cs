@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using WebApi.Data;
 using WebApi.Enums;
@@ -10,14 +11,14 @@ using WebApi.Tools;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("api/{token}/patient")]
-    public class PatientController : ControllerBase
+    [Route("api2/{token}/patient")]
+    public class PatientController2 : ControllerBase
     {
         private readonly ApplicationContext _context;
         private readonly PatientRepository _patient;
         private readonly LoginRepository _login;
 
-        public PatientController(ApplicationContext context)
+        public PatientController2(ApplicationContext context)
         {
             _context = context;
             _patient = new PatientRepository(_context);
@@ -109,13 +110,15 @@ namespace WebApi.Controllers
 #endif
         }
 
-        [HttpPut]
-        public IActionResult Edit(string token, [FromBody] PatientFromUser item)
+        [HttpPut("{json}")]
+        public IActionResult Edit(string token, string json)
         {
 #if RELEASE
             try
             {
 #endif
+
+            var item = JsonConvert.DeserializeObject<PatientFromUser>(json);
             Login login = GetLogin(token, out string error);
             if (login is null)
                 return Conflict(error);
