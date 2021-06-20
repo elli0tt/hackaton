@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import com.example.hackatonapp.presentation.AppNavHostActivity
-import com.example.hackatonapp.presentation.screen.data_list.PatientDataListFragment
 
 class AlarmReceiver : BroadcastReceiver() {
     var TAG = "AlarmReceiver"
