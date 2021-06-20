@@ -4,9 +4,9 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.hackatonapp.R
 import com.example.hackatonapp.data.entities.User
@@ -23,12 +23,9 @@ class SignUpFragment : Fragment(R.layout.fragment_registration) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initViews()
         setListeners()
         subscribeToViewModel()
     }
-
-    private fun initViews() {}
 
     private fun setListeners() {
         binding.buttonStartRegistration.setOnClickListener {
@@ -38,63 +35,59 @@ class SignUpFragment : Fragment(R.layout.fragment_registration) {
             val user = User(login, password, "pat", snils)
             if (password.isNotEmpty() && login.isNotEmpty() && snils.isNotEmpty()) {
                 if (password.length >= 6) {
-                    binding.progressBarRegistration.visibility = View.VISIBLE
+                    changeLoadingVisibility(isShown = true)
                     viewModel.getUserToken(user)
                 } else {
                     Toast.makeText(
-                            context,
-                            "Пароль должен содержать более 6 символов",
-                            Toast.LENGTH_SHORT
-                        )
-                        .show()
+                        context,
+                        getString(R.string.password_length_error_message),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-            }else {
+            } else {
                 Toast.makeText(
                     context,
-                    "Все поля должны быть заполнены",
+                    getString(R.string.all_fields_should_be_filled_error_message),
                     Toast.LENGTH_SHORT
-                )
-                    .show()
+                ).show()
             }
         }
     }
 
     private fun subscribeToViewModel() {
-        viewModel.userToken.observe(
-            viewLifecycleOwner,
-            Observer { response ->
-                when(response){
-                    is Resource.Success -> {
-                        hideProgressBar()
-                        response.data?.let { response ->
-                            saveToSharedPreferences(response)
-                        }
-                        findNavController()
-                            .navigate(R.id.action_registrationFragment_to_patientDataListFragment)
+        viewModel.userToken.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is Resource.Success -> {
+                    changeLoadingVisibility(isShown = false)
+                    response.data?.let { token ->
+                        saveToSharedPreferences(token)
                     }
-                    is Resource.Error -> {
-                        hideProgressBar()
-                        Toast.makeText(context, "Что-то пошло не так", Toast.LENGTH_SHORT).show()
-                    }
-                    is Resource.Loading -> {
-                        showProgressBar()
-                    }
+                    findNavController()
+                        .navigate(R.id.action_registrationFragment_to_patientDataListFragment)
+                }
+                is Resource.Error -> {
+                    changeLoadingVisibility(isShown = false)
+                    Toast.makeText(
+                        context,
+                        getString(R.string.something_went_wrong),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is Resource.Loading -> {
+                    changeLoadingVisibility(isShown = true)
                 }
             }
-        )
+        }
     }
 
-    private fun hideProgressBar() {
-        binding.progressBarRegistration.visibility = View.INVISIBLE
+    private fun changeLoadingVisibility(isShown: Boolean) {
+        binding.progressBar.isVisible = isShown
+        binding.loadingView.isVisible = isShown
     }
 
-    private fun showProgressBar() {
-        binding.progressBarRegistration.visibility = View.VISIBLE
-    }
-
-    private fun saveToSharedPreferences(token: String){
+    private fun saveToSharedPreferences(token: String) {
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-        with (sharedPref.edit()) {
+        with(sharedPref.edit()) {
             putString("token", token)
             apply()
         }
