@@ -113,7 +113,8 @@ class PatientDataListViewModel(application: Application) : AndroidViewModel(appl
                     if (patientNote.pressure.contains(query) ||
                         patientNote.pulse.contains(query) ||
                         patientNote.dateCreated.contains(query) ||
-                        patientNote.timeCreated.contains(query)
+                        patientNote.timeCreated.contains(query) ||
+                        patientNote.activity.contains(query)
                     ) {
                         result.add(patientNote)
                     }
