@@ -10,6 +10,6 @@ data class DoctorMessageEntity(
     val patientSNILS: String,
     val doctorId: Int,
     val comment: String,
-    val dateTime: Int,
+    val dateTime: Long,
     val isSent: Boolean
 )
