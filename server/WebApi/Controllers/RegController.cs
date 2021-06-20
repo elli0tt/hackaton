@@ -86,7 +86,7 @@ namespace WebApi.Controllers
 
                 Login login = new Login()
                 {
-                    Id = id,
+                    UserId = id,
                     UserType = userType,
                     Expires = DateTime.Now.AddMinutes(Constants.tokenLifetime),
                     Token = Guid.NewGuid()

@@ -96,10 +96,10 @@ namespace WebApi.Controllers
             if (IsTokenBelongsToDoctor(login.UserType))
                 return Conflict(Constants.notPatient);
 
-            if (!_patient.IsExist(login.Id))
+            if (!_patient.IsExist(login.UserId))
                 return Conflict("No such patient");
 
-            return Ok(new PatientInfo(_patient.GetById(login.Id)));
+            return Ok(new PatientInfo(_patient.GetById(login.UserId)));
 #if RELEASE
             }
             catch (Exception)
@@ -126,17 +126,17 @@ namespace WebApi.Controllers
             if (IsTokenBelongsToDoctor(login.UserType))
                 return Conflict(Constants.notPatient);
 
-            if (!_patient.IsExist(login.Id))
+            if (!_patient.IsExist(login.UserId))
                 return Conflict("No such patient");
 
             
             _patient.Update(new Patient()
             {
-                Id = login.Id,
+                Id = login.UserId,
                 FullName = item.FullName
             });
 
-            return Ok(new PatientInfo(_patient.GetById(login.Id)));
+            return Ok(new PatientInfo(_patient.GetById(login.UserId)));
 #if RELEASE
             }
             catch (Exception)

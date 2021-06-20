@@ -66,10 +66,47 @@ namespace WebApi.Controllers
             if (!IsTokenBelongsToDoctor(login.UserType))
                 return Conflict(Constants.notDoctor);
 
-            if (!_doctor.IsIdExist(login.Id))
+            if (!_doctor.IsIdExist(login.UserId))
                 return Conflict("No such doctor");
 
-            return Ok(new DoctorInfo(_doctor.Get(login.Id)));
+            return Ok(new DoctorInfo(_doctor.Get(login.UserId)));
+#if RELEASE
+            }
+            catch (Exception)
+            {
+                return BadRequest(Constants.defaultExceptionText);
+            }
+#endif
+        }
+
+        [HttpPut]
+        public IActionResult Edit(string token, [FromBody] DoctorFromUser item)
+        {
+#if RELEASE
+            try
+            {
+#endif
+                Login login = GetLogin(token, out string error);
+                if (login is null)
+                    return Conflict(error);
+
+                if (IsTokenExpired(login.Expires))
+                    return Conflict(Constants.tokenExpired);
+
+                if (IsTokenBelongsToDoctor(login.UserType))
+                    return Conflict(Constants.notPatient);
+
+                if (!_doctor.IsIdExist(login.UserId))
+                    return Conflict("No such patient");
+
+
+                _doctor.Update(new Doctor()
+                {
+                    Id = login.UserId,
+                    FullName = item.FullName
+                });
+
+                return Ok(new DoctorInfo(_doctor.Get(login.UserId)));
 #if RELEASE
             }
             catch (Exception)

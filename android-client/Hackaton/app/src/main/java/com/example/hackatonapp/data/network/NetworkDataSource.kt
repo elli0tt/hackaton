@@ -1,5 +1,6 @@
 package com.example.hackatonapp.data.network
 
+import com.example.hackatonapp.data.network.api.DoctorMessagesApi
 import com.example.hackatonapp.data.network.api.PatientApi
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -29,5 +30,9 @@ object NetworkDataSource {
 
     fun getPatientApi(): PatientApi {
         return retrofit.create(PatientApi::class.java)
+    }
+
+    fun getDoctorMessagesApi(): DoctorMessagesApi {
+        return retrofit.create(DoctorMessagesApi::class.java)
     }
 }

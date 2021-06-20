@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using WebApi.Data;
 using WebApi.Enums;
 using WebApi.Models;
@@ -23,9 +24,9 @@ namespace WebApi.Repositories
 
         public Login Insert(Login l) => Create(l);
 
-        public Login Get(long id, UserType userType)
+        public Login Get(long userId, UserType userType)
         {
-            return _context.Logins.FirstOrDefault(l => l.Id == id && l.UserType == userType);
+            return _context.Logins.FirstOrDefault(l => l.UserId == userId && l.UserType == userType);
         }
 
         public Login Get(string token)
@@ -33,9 +34,9 @@ namespace WebApi.Repositories
             return _context.Logins.FirstOrDefault(l => l.Token.ToString() == token);
         }
 
-        public bool IsExist(long id, UserType userType)
+        public bool IsExist(long userId, UserType userType)
         {
-            return _context.Logins.Any(l => l.Id == id && l.UserType == userType);
+            return _context.Logins.Any(l => l.UserId == userId && l.UserType == userType);
         }
 
         public bool IsTokenExist(string token)
@@ -48,6 +49,16 @@ namespace WebApi.Repositories
             var toDelete = Get(id, userType);
             _context.Logins.Remove(toDelete);
             _context.SaveChanges();
+        }
+
+        public Login Update(Login login)
+        {
+            var toUpdate = _context.Logins.Find(login.Id);
+            toUpdate.Expires = login.Expires;
+            toUpdate.Token = login.Token;
+            _context.Logins.Update(toUpdate);
+            _context.SaveChanges();
+            return toUpdate;
         }
     }
 }

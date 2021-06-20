@@ -51,7 +51,7 @@ namespace WebApi.Repositories
         public Doctor Update(Doctor d)
         {
             var toUpdate = _context.Doctors.Find(d.Id);
-            toUpdate = d;
+            toUpdate.FullName = d.FullName;
             _context.Doctors.Update(toUpdate);
             _context.SaveChanges();
             return toUpdate;

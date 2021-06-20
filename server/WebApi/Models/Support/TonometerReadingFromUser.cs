@@ -20,7 +20,6 @@ namespace WebApi.Models.Support
         [Required]
         public string Activity { get; set; }
 
-        [Required]
-        public string Comment { get; set; }
+        public string Comment { get; set; } = "";
     }
 }

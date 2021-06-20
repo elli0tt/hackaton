@@ -68,10 +68,10 @@ namespace WebApi.Controllers
             if (IsTokenBelongsToDoctor(login.UserType))
                 return Conflict(Constants.notPatient);
 
-            if (!_patient.IsExist(login.Id))
+            if (!_patient.IsExist(login.UserId))
                 return Conflict("No such patient");
 
-            return Ok(_reading.GetAll(_patient.GetById(login.Id).SNILS));
+            return Ok(_reading.GetAll(_patient.GetById(login.UserId).SNILS));
 #if RELEASE
             }
             catch (Exception)
@@ -131,12 +131,12 @@ namespace WebApi.Controllers
             if (IsTokenBelongsToDoctor(login.UserType))
                 return Conflict(Constants.notPatient);
 
-            if (!_patient.IsExist(login.Id))
+            if (!_patient.IsExist(login.UserId))
                 return Conflict("No such patient");
 
             return Ok(_reading.Insert(new TonometerReading()
             {
-                PatientSNILS = _patient.GetById(login.Id).SNILS,
+                PatientSNILS = _patient.GetById(login.UserId).SNILS,
                 DateTime = item.DateTime,
                 SYS = item.SYS,
                 DIA = item.DIA,
@@ -183,16 +183,16 @@ namespace WebApi.Controllers
             }
             else if (login.UserType == UserType.Patient)
             {
-                if (!_patient.IsExist(login.Id))
+                if (!_patient.IsExist(login.UserId))
                     return Conflict("Token invalid");
 
                 var reading = _reading.Get(item.Id);
-                if (reading.PatientSNILS != _patient.GetById(login.Id).SNILS)
+                if (reading.PatientSNILS != _patient.GetById(login.UserId).SNILS)
                     return Conflict("This reading does not belongs to you");
 
-                if (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - reading.DateTime
-                    > Constants.editOrDeleteReadingTime)
-                    return Conflict("Too late to edit this reading");
+                //if (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - reading.DateTime
+                //    > Constants.editOrDeleteReadingTime)
+                //    return Conflict("Too late to edit this reading");
 
                 return Ok(_reading.Update(
                     id: item.Id,
@@ -241,11 +241,11 @@ namespace WebApi.Controllers
             }
             else if (login.UserType == UserType.Patient)
             {
-                if (!_patient.IsExist(login.Id))
+                if (!_patient.IsExist(login.UserId))
                     return Conflict("Token invalid");
 
                 var reading = _reading.Get(id);
-                if (reading.PatientSNILS != _patient.GetById(login.Id).SNILS)
+                if (reading.PatientSNILS != _patient.GetById(login.UserId).SNILS)
                     return Conflict("This reading does not belongs to you");
 
                 if (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - reading.DateTime

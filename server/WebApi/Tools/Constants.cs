@@ -15,7 +15,7 @@
         /// <summary>
         /// Time in milliseconds when patient can delete or edit his tonometer reading
         /// </summary>
-        public const int editOrDeleteReadingTime = 60 * 60 * 1000;
+        public const int editOrDeleteReadingTime = 24 * 60 * 60 * 1000;
 
         public const string defaultExceptionText = "Exception";
 

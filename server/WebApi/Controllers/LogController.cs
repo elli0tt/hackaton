@@ -54,7 +54,7 @@ namespace WebApi.Controllers
             if (!usernameExists)
                 return Conflict("Username does not exist");
 
-            long id;
+            long userId;
             byte[] hashed;
             byte[] hash;
 
@@ -63,7 +63,7 @@ namespace WebApi.Controllers
                 Doctor doctor = _doctor.Get(item.Username);
                 hashed = PswdCrypt.GenerateHash(item.Password, doctor.PasswordSalt);
 
-                id = doctor.Id;
+                userId = doctor.Id;
                 hash = doctor.PasswordHash;
             }
             else
@@ -71,7 +71,7 @@ namespace WebApi.Controllers
                 Patient patient = _patient.Get(item.Username);
                 hashed = PswdCrypt.GenerateHash(item.Password, patient.PasswordSalt);
 
-                id = patient.Id;
+                userId = patient.Id;
                 hash = patient.PasswordHash;
             }
 
@@ -82,13 +82,16 @@ namespace WebApi.Controllers
 
             Login login = new Login()
             {
-                Id = id,
+                UserId = userId,
                 UserType = userType,
                 Expires = DateTime.Now.AddMinutes(Constants.tokenLifetime),
                 Token = Guid.NewGuid()
             };
-            if (_login.IsExist(id, userType))
-                _login.Delete(id, userType);
+            if (_login.IsExist(userId, userType))
+            {
+                login.Id = _login.Get(userId, userType).Id;
+                return Ok(_login.Update(login).Token.ToString());
+            }
 
             return Ok(_login.Insert(login).Token.ToString());
 #if RELEASE

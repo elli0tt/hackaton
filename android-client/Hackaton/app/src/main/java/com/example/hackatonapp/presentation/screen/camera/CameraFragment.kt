@@ -46,12 +46,14 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(
-            this.requireContext(), it) == PackageManager.PERMISSION_GRANTED
+            this.requireContext(), it
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun getOutputDirectory(): File {
         val mediaDir = this.requireActivity().externalMediaDirs.firstOrNull()?.let {
-            File(it, resources.getString(R.string.app_name)).apply { mkdirs() } }
+            File(it, resources.getString(R.string.app_name)).apply { mkdirs() }
+        }
         return if (mediaDir != null && mediaDir.exists())
             mediaDir else this.requireActivity().filesDir
     }
@@ -81,33 +83,36 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
 
         val photoFile = File(
             outputDirectory,
-            SimpleDateFormat(FILENAME_FORMAT, Locale.US
-            ).format(System.currentTimeMillis()) + ".jpg")
+            SimpleDateFormat(
+                FILENAME_FORMAT, Locale.US
+            ).format(System.currentTimeMillis()) + ".jpg"
+        )
 
 //        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
 
         imageCapture.takePicture(ContextCompat.getMainExecutor(this.requireContext()), object :
             ImageCapture.OnImageCapturedCallback() {
-                override fun onError(exc: ImageCaptureException) {
-                    Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
-                }
-                override fun onCaptureSuccess(imageP: ImageProxy) {
-                    try {
-                        val rotation = imageP.imageInfo.rotationDegrees
-                        img = imageProxyToBitmap(imageP)
-                        img = rotateImage(img, rotation.toFloat())
-                        if (img != null) {
-                            var fos = FileOutputStream(photoFile)
-                            img?.compress(Bitmap.CompressFormat.JPEG, 50, fos)
-                            fos.flush()
-                            fos.close()
-                        }
-                    } catch (e: java.lang.Exception) {
-                        Log.e("MyLog", e.toString());
-                    }
+            override fun onError(exc: ImageCaptureException) {
+                Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
+            }
 
+            override fun onCaptureSuccess(imageP: ImageProxy) {
+                try {
+                    val rotation = imageP.imageInfo.rotationDegrees
+                    img = imageProxyToBitmap(imageP)
+                    img = rotateImage(img, rotation.toFloat())
+                    if (img != null) {
+                        var fos = FileOutputStream(photoFile)
+                        img?.compress(Bitmap.CompressFormat.JPEG, 50, fos)
+                        fos.flush()
+                        fos.close()
+                    }
+                } catch (e: java.lang.Exception) {
+                    Log.e("MyLog", e.toString());
                 }
-            })
+
+            }
+        })
     }
 
     override fun onDestroy() {
@@ -121,7 +126,8 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
 
         if (!allPermissionsGranted()) {
             ActivityCompat.requestPermissions(
-                this.requireActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+                this.requireActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
+            )
         }
 
         startCamera()
@@ -149,7 +155,8 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
             try {
                 cameraProvider.unbindAll()
                 cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview, imageCapture)
+                    this, cameraSelector, preview, imageCapture
+                )
 
             } catch (exc: Exception) {
                 Log.e(TAG, "Use case binding failed", exc)
