@@ -7,38 +7,27 @@ import android.text.format.DateFormat
 import android.view.View
 import android.widget.TimePicker
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.hackatonapp.R
 import com.example.hackatonapp.databinding.FragmentSettingsBinding
 import com.example.hackatonapp.presentation.extensions.viewBinding
 import com.example.hackatonapp.presentation.screen.settings.NotificationScheduler.setReminder
-import com.example.hackatonapp.presentation.screen.sign_in.SignInViewModel
 import java.util.*
 
-class SettingsFragment :
-    Fragment(R.layout.fragment_settings),
-    TimePickerDialog.OnTimeSetListener {
+class SettingsFragment : Fragment(R.layout.fragment_settings), TimePickerDialog.OnTimeSetListener {
 
     private val binding by viewBinding(FragmentSettingsBinding::bind)
 
-    private val viewModel: SignInViewModel by viewModels()
-
-    var day = 0
-    var month: Int = 0
-    var year: Int = 0
     var hour: Int = 0
     var minute: Int = 0
-    var myDay = 0
-    var myMonth: Int = 0
-    var myYear: Int = 0
     var myHour: Int = 0
     var myMinute: Int = 0
+
     private lateinit var localData: LocalData
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        localData = LocalData(view?.context);
+        localData = LocalData(requireContext());
         binding.switch1.isChecked = localData.reminderStatus
         if (binding.switch1.isChecked) {
             binding.tvWhenWeSendNotifications.text = localData.textStatus
@@ -83,8 +72,7 @@ class SettingsFragment :
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         myHour = hourOfDay
         myMinute = minute
-        var timeLine: String
-        timeLine = if (myMinute < 10) {
+        var timeLine: String = if (myMinute < 10) {
             "$hourOfDay:0$minute"
         } else {
             "$hourOfDay:$minute"
