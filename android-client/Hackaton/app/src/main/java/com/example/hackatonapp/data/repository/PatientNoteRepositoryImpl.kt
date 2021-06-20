@@ -59,4 +59,8 @@ class PatientNoteRepositoryImpl(context: Context) : PatientNoteRepository {
                 }
             })
     }
+
+    override suspend fun deleteAllNotes() {
+        patientNoteDao.deleteAllNotes()
+    }
 }

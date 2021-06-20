@@ -18,4 +18,7 @@ interface PatientNoteDao {
 
     @Query("SELECT * FROM patient_notes_table WHERE id == :id")
     suspend fun getNoteById(id: Int): PatientNoteEntity
+
+    @Query("DELETE FROM patient_notes_table")
+    suspend fun deleteAllNotes()
 }

@@ -14,4 +14,6 @@ interface PatientNoteRepository {
     suspend fun getNoteById(id: Int): PatientNoteEntity
 
     fun loadAllNotesFromNetwork(token: String)
+
+    suspend fun deleteAllNotes()
 }
