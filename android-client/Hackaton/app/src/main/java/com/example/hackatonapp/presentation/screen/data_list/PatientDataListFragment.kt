@@ -89,7 +89,7 @@ class PatientDataListFragment : Fragment(R.layout.fragment_patient_data_list) {
         searchView.queryHint = getString(R.string.patient_note_search)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                return true
+                return false
             }
 
             override fun onQueryTextChange(newQuery: String): Boolean {
