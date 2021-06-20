@@ -84,7 +84,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), TimePickerDialog.
             AlarmReceiver::class.java, localData.get_hour(), localData.get_min()
         )
 
-
         binding.tvWhenWeSendNotifications.visibility = View.VISIBLE
         binding.tvWhenWeSendNotifications.text =
             resources.getString(R.string.when_we_send_notifications, timeLine);
