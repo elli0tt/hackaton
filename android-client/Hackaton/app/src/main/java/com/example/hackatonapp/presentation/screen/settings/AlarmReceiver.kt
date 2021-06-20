@@ -27,7 +27,7 @@ class AlarmReceiver : BroadcastReceiver() {
         //Trigger the notification
         NotificationScheduler.showNotification(
             context, AppNavHostActivity::class.java,
-            "You have 5 unwatched videos", "Watch them now?"
+            "Напоминание", "Пора проверить давление и записать данные!"
         )
     }
 }
